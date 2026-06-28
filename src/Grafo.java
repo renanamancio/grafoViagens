@@ -17,13 +17,16 @@ public class Grafo {
         this.adjVertices = adjVertices;
     }
 
-    public void addVertex(String label) {
-        adjVertices.putIfAbsent(new Vertex(label), new ArrayList<>());
+    public void adicionarCidade(Cidade cidade) {
     }
 
-    public void removeVertex(String label) {
-        Vertex v = new Vertex(label);
-        adjVertices.values().stream().forEach(e -> e.remove(v));
-        adjVertices.remove(new Vertex(label));
+    public void adicionarRota(Cidade cidadeOrigem, Cidade cidadeDestino){
+
+    }
+
+    public void listarCidades() {
+    }
+
+    public boolean existeRota(Cidade cidadeOrigem, Cidade cidadeDestino) {
     }
 }
