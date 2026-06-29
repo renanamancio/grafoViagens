@@ -43,6 +43,12 @@ public class Grafo {
     }
 
     public void listarCidades() {
+        System.out.println("Lista de Cidades:");
+        System.out.println();
+        adjVertices.forEach((key, value) -> {
+            String msg = key + ": " + value;
+            System.out.println(msg);
+        });
     }
 
     public boolean existeRota(String cidadeOrigem, String cidadeDestino) {
