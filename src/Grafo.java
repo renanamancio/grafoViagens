@@ -1,30 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Grafo {
-        private Map<Cidade, List<Cidade>> adjVertices;
+    private List<Cidade> vertices;
 
-    public Grafo(Map<Cidade, List<Cidade>> adjVertices) {
-        this.adjVertices = adjVertices;
-    }
-
-    public Map<Cidade, List<Cidade>> getAdjVertices() {
-        return adjVertices;
-    }
-
-    public void setAdjVertices(Map<Cidade, List<Cidade>> adjVertices) {
-        this.adjVertices = adjVertices;
+    public Grafo() {
+        this.vertices = new ArrayList<>();
     }
 
     public void adicionarCidade(Cidade cidade) {
+        vertices.add(cidade);
     }
 
+    //adicionar rota para os dois lados.
     public void adicionarRota(String cidadeOrigem, String cidadeDestino){
         Cidade origem = null;
         Cidade destino = null;
 
-        for (Cidade cidade : adjVertices.keySet()) {
+        for (Cidade cidade : vertices) {
             if (cidade.getCidade().equalsIgnoreCase(cidadeOrigem)) {
                 origem = cidade;
             }
@@ -34,9 +26,12 @@ public class Grafo {
         }
 
         if (origem != null && destino != null) {
-            adjVertices.get(origem).add(destino);
-            adjVertices.get(destino).add(origem);
+            origem.adicionarRota(destino);
+            destino.adicionarRota(origem);
+            
             System.out.println("Rota Adicionada");
+
+
         }else{
             System.out.println("Erro");
         }
@@ -52,6 +47,32 @@ public class Grafo {
     }
 
     public boolean existeRota(String cidadeOrigem, String cidadeDestino) {
+
+        Cidade origem = null;
+        Cidade destino = null;
+
+        for (Cidade cidade : adjVertices.keySet()) {
+            if (cidade.getCidade().equalsIgnoreCase(cidadeOrigem)) {
+                origem = cidade;
+            }
+            if (cidade.getCidade().equalsIgnoreCase(cidadeDestino)) {
+                destino = cidade;
+            }
+        }
+        Stack<Cidade> stack = new Stack<Cidade>();
+
+        stack.push(origem);
+
+        while (!stack.isEmpty()) {
+            String vertex = stack.pop();
+            if (!visited.contains(vertex)) {
+                visited.add(vertex);
+                for (Vertex v : graph.getAdjVertices(vertex)) {
+                    stack.push(v.label);
+                }
+            }
+        }
+
         return true;
     }
 }
